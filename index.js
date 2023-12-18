@@ -10,6 +10,7 @@ const data = {
 
 };
 let savedOpponent = {};
+const fighterList = [];
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -73,6 +74,14 @@ app.get("/sort", (req, res) => {
 app.get("/createFighter", (req, res) => {
 
     res.render("createFighter.ejs");
+})
+
+app.get("/saveFighter", (req, res) => {
+
+    //console.log(savedOpponent);
+    data.mapFightIni.push({ name: savedOpponent.OpponentName, ini: savedOpponent.Ini });
+
+    res.render("index.ejs", data);
 })
 
 app.listen(port, () => {
