@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warhammer ultimate auto battle app</title>
+
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+</head>
+
+<body>
+    <header>
+        <h1>
+            WARHAMMER ULTIMATE AUTO BATTLE APP</h1>
+    </header>
+
+    <div class="container">
+
+        <!-- <div class="header-section">
+            <h1>
+                WARHAMMER ULTIMATE AUTO BATTLE APP</h1>
+        </div> -->
+
+        <div class="left-section">
+
+
+            <form action="/addFighter" method="post">
+
+
+                <label for="fighterName">Imię walczącego</label>
+                <input name="fighterName" type="text">
+
+
+
+                <label for="initiative">Inicjatywa</label>
+                <input type="number" name="initiative" min="0">
+
+                <button type="submit">Dodaj</button>
+            </form>
+
+
+            <a href="/sort"><button>Rozpocznij</button></a>
+            <a href="/reset"><button>Reset</button></a>
+            <a href="/createFighter"><button>Wygeneruj przeciwnika</button></a>
+
+            <%if(locals) {%>
+            <div>
+
+                <table>
+
+                    <tbody>
+
+                        <p>
+
+                            <span class="atrributes"><%= locals.OpponentName  %></span> Inicjatywa: <%= locals.Ini %>
+                        </p>
+                        <tr>
+
+                            <td class="atrributes">WW</td>
+                            <td class="atrributes">US</td>
+                            <td class="atrributes">K</td>
+                            <td class="atrributes">ODP</td>
+                            <td class="atrributes">ZR</td>
+                            <td class="atrributes">INT</td>
+                            <td class="atrributes">SW</td>
+                            <td class="atrributes">OGD</td>
+
+                        </tr>
+                        <tr>
+                            <td><%= locals.WW %></td>
+                            <td><%= locals.US %></td>
+                            <td><%= locals.K %></td>
+                            <td><%= locals.Odp %></td>
+                            <td><%= locals.Zr %></td>
+                            <td><%= locals.Int %></td>
+                            <td><%= locals.SW %></td>
+                            <td><%= locals.Ogd %></td>
+                        </tr>
+                        <tr>
+                            <td class="atrributes">A</td>
+                            <td class="atrributes">ŻYW</td>
+                            <td class="atrributes">S</td>
+                            <td class="atrributes">WT</td>
+                            <td class="atrributes">SZ</td>
+                        </tr>
+                        <tr>
+                            <td><%= locals.A %></td>
+                            <td><%= locals.Zyw %></td>
+                            <td><%= locals.S %></td>
+                            <td><%= locals.Wt %></td>
+                            <td><%= locals.Szyb %></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <%= locals.Bron %> <%= locals.Obr %>
+                <P>
+                    <%= locals.Cechy %>
+                </P>
+                <P>
+                    GŁOWA:<%= locals.GLO %> KORPUS:<%= locals.KO %> RĘCE:<%= locals.RECE %> NOGI:<%= locals.NOGI %>
+                </P>
+            </div>
+
+            <%}%>
+
+        </div>
+
+        <div class="right-section">
+
+            <table id="fighters">
+
+                <tbody>
+
+                    <% for(let i =0; i<mapFightIni.length; i++) { %>
+            <tr id="<%= i+1 %>">
+
+                <td><%= mapFightIni[i].name %></td>
+                <td><%= mapFightIni[i].ini %></td>
+
+            </tr>
+
+            <% };%>
+
+            </tbody>
+            </table>
+
+            <button id="nextFighter">Następny</button>
+
+            <h2>Trafienia i obrażenia</h2>
+
+            <label for="hitAttemptDiceResult">Wynik kości: </label>
+            <input type="number" name="hitAttemptDiceResult" min="1" max="100" id="hitAttemptDiceResult">
+
+            <div class="data_div">
+                <p>
+                    Lokacja trafienia:
+                <div id="hitLocation"></div>
+                </p>
+
+                <div>Rzut k100: <div id="d100throw"></div>
+                </div>
+                <div>Rzut k10: <div id="d10throw"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+        let hitLocation = document.getElementById("hitLocation");
+        let nextFighterButton = document.getElementById("nextFighter");
+        let fightersTable = document.getElementById("fighters");
+        let d100throw = document.getElementById("d100throw");
+        let d10throw = document.getElementById("d10throw");
+        let hitAttemptDiceResult = document.getElementById("hitAttemptDiceResult");
+        let fightersNumber = fightersTable.rows.length;
+        let currentFighterIndex = 1;
+
+        function reverseNumber(number) {
+
+            let reverseNumber = 0;
+            let location = "";
+
+            if (number === "100") {
+
+                reverseNumber = 1;
+            }
+
+            if (number === "1") {
+
+                reverseNumber = 100;
+            }
+            else {
+
+                let dozens = Math.floor(number / 10);
+                let unity = number - dozens * 10;
+                reverseNumber = unity * 10 + dozens;
+            }
+
+
+            if (reverseNumber >= "1" && reverseNumber <= "15") {
+
+                location = "GŁOWA";
+            }
+            else if (reverseNumber >= "16" && reverseNumber <= "35") {
+
+                location = "PRAWA RĘKA";
+            }
+            else if (reverseNumber >= "36" && reverseNumber <= "55") {
+
+                location = "LEWA RĘKA";
+            }
+            else if (reverseNumber >= "56" && reverseNumber <= "80") {
+
+                location = "KORPUS";
+            }
+            else if (reverseNumber >= "81" && reverseNumber <= "90") {
+
+                location = "PRAWA NOGA";
+            }
+
+            else if (reverseNumber >= "91" && reverseNumber <= "100") {
+
+                location = "LEWA NOGA";
+            }
+
+            return location;
+        }
+
+        function changeFighter() {
+
+            let d100 = Math.floor(Math.random() * 100) + 1;
+            let d10 = Math.floor(Math.random() * 10) + 1;
+
+            document.getElementById(fightersNumber).classList.remove("highlight");
+
+            if (currentFighterIndex != 1) {
+
+                document.getElementById(currentFighterIndex - 1).classList.remove("highlight");
+            }
+
+            document.getElementById(currentFighterIndex).classList.add("highlight");
+            currentFighterIndex++;
+
+            if (currentFighterIndex == fightersNumber + 1) {
+
+                currentFighterIndex = 1;
+            }
+
+            d100throw.textContent = d100;
+            d10throw.textContent = d10;
+            hitAttemptDiceResult.value = parseInt(d100);
+            hitLocation.textContent = reverseNumber(d100);
+
+        }
+
+        document.getElementById("hitAttemptDiceResult").addEventListener("change", (event) => {
+            hitLocation.textContent = reverseNumber(event.target.value);
+
+        });
+
+        nextFighterButton.addEventListener("click", () => {
+            changeFighter();
+
+        })
+    </script>
+
+</body>
+
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Fighter</title>
+    <link rel="stylesheet" href="/stylesheets/styleCreateFighter.css" type="text/css">
+</head>
+
+<body>
+
+    <header>
+        <a href="/" onclick=""><button>Powrót do poprzedniej strony</button></a>
+        <a href="#" onclick=""><Button>Zapisz</Button></a>
+    </header>
+
+    <form action="/generate" method="post">
+
+        <!-- <input type="text" placeholder="Wpisz nazwę walczącego" name="fighterName"> -->
+
+        <select name="race" id="">
+            <option value="human">Człowiek</option>
+            <option value="beast">Zwierzoludź</option>
+            <option value="orc">Ork</option>
+            <option value="nondead">Nieumarły</option>
+        </select>
+
+        <select name="difficulty" id="">
+            <option value="private">Szeregowy</option>
+            <option value="warrior">Wojownik</option>
+            <option value="leader">Dowódca</option>
+        </select>
+
+        <select name="weapon" id="">
+            <option value="one_heanded">jednoręczna</option>
+            <option value="two_heanded">dwuręczna</option>
+            <option value="range">Zasięgowa</option>
+        </select>
+
+        <button type="submit">Wygeneruj</button>
+    </form>
+
+
+
+    <%if(locals) {%>
+    <div>
+
+        <table>
+
+            <tbody>
+
+                <p>
+
+                    <span class="atrributes"><%= locals.OpponentName  %></span> Inicjatywa: <%= locals.Ini %>
+                </p>
+                <tr>
+
+                    <td class="atrributes">WW</td>
+                    <td class="atrributes">US</td>
+                    <td class="atrributes">K</td>
+                    <td class="atrributes">ODP</td>
+                    <td class="atrributes">ZR</td>
+                    <td class="atrributes">INT</td>
+                    <td class="atrributes">SW</td>
+                    <td class="atrributes">OGD</td>
+
+                </tr>
+                <tr>
+                    <td><%= locals.WW %></td>
+                    <td><%= locals.US %></td>
+                    <td><%= locals.K %></td>
+                    <td><%= locals.Odp %></td>
+                    <td><%= locals.Zr %></td>
+                    <td><%= locals.Int %></td>
+                    <td><%= locals.SW %></td>
+                    <td><%= locals.Ogd %></td>
+                </tr>
+                <tr>
+                    <td class="atrributes">A</td>
+                    <td class="atrributes">ŻYW</td>
+                    <td class="atrributes">S</td>
+                    <td class="atrributes">WT</td>
+                    <td class="atrributes">SZ</td>
+                </tr>
+                <tr>
+                    <td><%= locals.A %></td>
+                    <td><%= locals.Zyw %></td>
+                    <td><%= locals.S %></td>
+                    <td><%= locals.Wt %></td>
+                    <td><%= locals.Szyb %></td>
+                </tr>
+
+            </tbody>
+        </table>
+        <%= locals.Bron %> <%= locals.Obr %>
+        <P>
+            <%= locals.Cechy %>
+        </P>
+        <P>
+            GŁOWA:<%= locals.GLO %> KORPUS:<%= locals.KO %> RĘCE:<%= locals.RECE %> NOGI:<%= locals.NOGI %>
+        </P>
+    </div>
+
+    <form action="/giveName" method="post">
+        <input type="text" name="fighterName" id="" placeholder="Wpisz nazwę wojownika">
+        <button type="submit">Ok</button>
+    </form>
+
+    <%}%>
+
+</body>
+
+</html>

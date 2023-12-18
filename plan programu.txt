@@ -1,0 +1,11 @@
+1 - wczytaj liczbę przeciwników i ich statystyki z pliku tekstowego
+2 - ustal inicjatywę dla każdego z nich 
+3 - wczytaj bohaterów biorących udział w walce i określ ich inicjatywy
+4 - ustal i wyświetl kolejność wg inicjatywy
+5 - dodaj możliwość ataku dla każdego przeciwnika (lokalizacja trafienia oraz obrażenia)
+6 - dodaj możliwość zadawania obrażeń przeciwnikom przez graczy
+
+
+
+Szablon przeciwników
+WW US K ODP ZR INT SW A ZW S WT
