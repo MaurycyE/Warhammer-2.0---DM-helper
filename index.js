@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { humanOpponent } from "./humanOpponentClass.js";
+import { battleManager } from "./src/controllers/battleMenager.js";
 
 const app = express();
 const port = 3000;
@@ -24,7 +25,7 @@ app.post("/addFighter", (req, res) => {
 
     data.mapFightIni.push({ name: req.body.fighterName, ini: req.body.initiative });
     res.render("index.ejs", data);
-})
+});
 
 app.post("/generate", (req, res) => {
 
@@ -57,6 +58,7 @@ app.post("/giveName", async (req, res) => {
 app.get("/reset", (req, res) => {
 
     data.mapFightIni = [];
+    fighterList = [];
 
     res.render("index.ejs", data);
 })
@@ -78,10 +80,19 @@ app.get("/createFighter", (req, res) => {
 
 app.get("/saveFighter", (req, res) => {
 
-    //console.log(savedOpponent);
     data.mapFightIni.push({ name: savedOpponent.OpponentName, ini: savedOpponent.Ini });
+    fighterList.push(savedOpponent);
+    //res.locals = savedOpponent;
+
+    //console.log(fighterList);
 
     res.render("index.ejs", data);
+})
+
+app.get("/showAtributes", (req, res) => {
+
+
+    res.render("index.ejs");
 })
 
 app.listen(port, () => {
