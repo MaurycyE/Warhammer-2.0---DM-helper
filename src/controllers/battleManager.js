@@ -1,11 +1,28 @@
 import puppeteer from "puppeteer-core";
+import { config } from "../config.js";
 
 export class battleManager {
 
-
+    configInstance = new config();
 
 
     findFighterAtributes(opponentData, fighterList) {
+
+        (async () => {
+            const browser = await puppeteer.launch({
+                //executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                executablePath: this.configInstance.puppeteerExecutablePath,
+            });
+            const page = await browser.newPage()
+            //await page.goto('http://localhost:3000/')
+            await page.goto(this.configInstance.puppeteerRunningPage);
+            page.on('dialog', async dialog => {
+                console.log(dialog.message())
+                await dialog.dismiss()
+            })
+            await page.evaluate(() => alert('This message is inside an alert box'))
+            await browser.close()
+        })()
 
         return opponentData;
     }
