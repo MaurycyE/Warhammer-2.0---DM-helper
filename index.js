@@ -90,7 +90,7 @@ app.get("/saveFighter", (req, res) => {
     res.render("index.ejs", data);
 })
 
-app.get("/showAtributes", (req, res) => {
+app.get("/next", (req, res) => {
 
     const battleManagerInstance = new battleManager();
 
