@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { humanOpponent } from "./humanOpponentClass.js";
-import { battleManager } from "./src/controllers/battleMenager.js";
+import { battleManager } from "./src/controllers/battleManager.js";
 
 const app = express();
 const port = 3000;
@@ -11,7 +11,8 @@ const data = {
 
 };
 let savedOpponent = {};
-const fighterList = [];
+let fighterList = [];
+let currentIndex = 0;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -91,8 +92,20 @@ app.get("/saveFighter", (req, res) => {
 
 app.get("/showAtributes", (req, res) => {
 
+    const battleManagerInstance = new battleManager();
 
-    res.render("index.ejs");
+    if (currentIndex == data.mapFightIni.length) {
+
+        currentIndex = 0;
+    }
+    let result = battleManagerInstance.findFighterAtributes(fighterList, data.mapFightIni, currentIndex);
+
+    //console.log(currentIndex);
+
+    currentIndex++;
+
+
+    res.render("index.ejs", data);
 })
 
 app.listen(port, () => {
