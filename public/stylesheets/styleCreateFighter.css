@@ -2,7 +2,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 120vh;
     margin: 0;
     background-image: url("/images/warhammeronlineartwork.jpg");
     /* Dodaj ścieżkę do swojego obrazu */

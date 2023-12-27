@@ -46,7 +46,7 @@
             <a href="/reset"><button>Reset</button></a>
             <a href="/createFighter"><button>Wygeneruj przeciwnika</button></a>
 
-            <%if(locals) {%>
+            <% if(locals) {%>
             <div>
 
                 <table>
@@ -150,7 +150,8 @@
         </div>
 
     </div>
-
+    
+    <script src="/js/nextButtonController.js"></script>
 
     <!-- <script>
         let hitLocation = document.getElementById("hitLocation");
@@ -218,14 +219,14 @@
             let d100 = Math.floor(Math.random() * 100) + 1;
             let d10 = Math.floor(Math.random() * 10) + 1;
 
-            document.getElementById(fightersNumber).classList.remove("highlight");
+            document.getElementById("rzad"+fightersNumber).classList.remove("highlight");
 
             if (currentFighterIndex != 1) {
 
-                document.getElementById(currentFighterIndex - 1).classList.remove("highlight");
+                document.getElementById("rzad"+currentFighterIndex - 1).classList.remove("highlight");
             }
 
-            document.getElementById(currentFighterIndex).classList.add("highlight");
+            document.getElementById("rzad"+currentFighterIndex).classList.add("highlight");
             currentFighterIndex++;
 
             if (currentFighterIndex == fightersNumber + 1) {
