@@ -68,7 +68,8 @@
 
             if (currentFighterIndex != 1) {
 
-                document.getElementById("rzad"+currentFighterIndex - 1).classList.remove("highlight");
+                let fighterIndexSubstractOne = currentFighterIndex-1;
+                document.getElementById("rzad"+fighterIndexSubstractOne).classList.remove("highlight");
             }
 
             document.getElementById("rzad"+currentFighterIndex).classList.add("highlight");
