@@ -90,8 +90,9 @@ app.get("/saveFighter", (req, res) => {
     res.render("index.ejs", data);
 })
 
-app.get("/next", (req, res) => {
+app.get("/next", async (req, res) => {
 
+    try {
     const battleManagerInstance = new battleManager();
 
     if (currentIndex == data.mapFightIni.length) {
@@ -100,13 +101,20 @@ app.get("/next", (req, res) => {
     }
     let result = battleManagerInstance.findFighterAtributes(fighterList, data.mapFightIni, currentIndex);
 
-    //console.log(currentIndex);
+    //console.log(result[0]);
+    res.locals = result[0];
 
     currentIndex++;
 
 
-    res.render("index.ejs", data);
-})
+    //res.render("index.ejs", data);
+
+    } catch (error) {
+
+        console.error(error);
+        res.status(500).send("internal server error");
+    }
+});
 
 app.listen(port, () => {
 
